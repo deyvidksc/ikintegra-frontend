@@ -1,0 +1,115 @@
+        <div class="card">
+            <h5>Videos do Canal - {{channel.title}}</h5>
+            <p-toolbar styleClass="mb-4 gap-2 justify-content-end">
+                <ng-template pTemplate="left">
+                    <button pButton label="Voltar" class="p-button-outlined" icon="pi pi-step-backward"
+                        (click)="backPage()"></button>
+                </ng-template>
+            </p-toolbar>
+            <p-dataView #dv [value]="videos" [paginator]="true" [lazy]="true" [loading]="loading" [rows]="pageSize"
+                [totalRecords]="totalCount" filterBy="title" layout="grid" (onLazyLoad)="loadData($event)">
+                <ng-template pTemplate="loader">
+                    <div *ngIf="loading" class="p-d-flex p-ai-center p-jc-center" style="height: 200px;">
+                        <i class="pi pi-spin pi-spinner"></i>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="header">
+                    <div class="flex flex-column md:flex-row md:justify-content-between gap-2">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input type="search" pInputText placeholder="Pesquisar por nome"
+                                (input)="onFilter(dv, $event)">
+                        </span>
+                        <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                    </div>
+                </ng-template>
+                <ng-template let-video pTemplate="listItem">
+                    <div class="col-12 md:col-6 flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
+                        <a target="_blank" [href]="video.url" style="cursor: pointer; text-decoration: none;">
+                            <img [src]="video.imageBase64" [alt]="video.title" class="avatar mr-2"
+                                style="object-fit: cover; width: 168px; height: 94px;"
+                                class="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round"
+                                (error)="handleImageError($event)" />
+                        </a>
+                        <div
+                            class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                            <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                                <div class="flex text-1xl font-semibold text-900 align-items-center text-center">
+                                    {{ video.title }}
+                                </div>
+                                <div class="flex flex-row align-items-center mb-1">
+                                    <div>
+                                        <small class="font-bold mr-1">Publicação:</small>
+                                        <small>{{ formatUploadDate(video.uploadDate) }}</small>
+                                    </div>
+                                    <div class="ml-2">
+                                        <small class="font-bold mr-1">Duração:</small>
+                                        <small>{{ abbreviateDuration(video.duration) }}</small>
+                                    </div>
+                                </div>
+                                <div class="flex align-items-center gap-3">
+                                    <div class="engagement-info">
+                                        <i class="pi pi-heart"></i>
+                                        <small
+                                            class="ml-1">{{ video.engagement?.likes ? abbreviateNumber(video.engagement.likes) : '0' }}</small>
+                                    </div>
+                                    <div class="engagement-info">
+                                        <i class="pi pi-eye"></i>
+                                        <small
+                                            class="ml-1">{{ video.engagement?.views ? abbreviateNumber(video.engagement.views) : '0' }}</small>
+                                    </div>
+                                </div>
+                                <div class="flex align-items-center gap-3">
+                                    <div
+                                        [class]="'product-badge status-' + (video.isDownloaded ? 'instock' : 'outofstock')">
+                                        {{ video.isDownloaded ? 'Processado' : 'Não processado' }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template let-video pTemplate="gridItem">
+                    <div class="col-12 md:col-3">
+                        <div class="card m-3 border-1 surface-border">
+                            <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
+                                <div class="flex flex-row align-items-center mb-2">
+                                    <small class="font-bold mr-1">Publicação:</small>
+                                    <small>{{ formatUploadDate(video.uploadDate) }}</small>
+                                </div>
+                                <div class="flex flex-row align-items-center mb-2">
+                                    <div class="engagement-info">
+                                        <i class="pi pi-heart"></i>
+                                        <small
+                                            class="ml-1">{{ video.engagement?.likes ? abbreviateNumber(video.engagement.likes) : '0' }}</small>
+                                    </div>
+                                    <div class="engagement-info">
+                                        <i class="pi pi-eye"></i>
+                                        <small
+                                            class="ml-1">{{ video.engagement?.views ? abbreviateNumber(video.engagement.views) : '0' }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-column align-items-center text-center mb-3">
+                                <a target="_blank" [href]="video.url" style="cursor: pointer;">
+                                    <img [src]="video.imageBase64" [alt]="video.title"
+                                        class="w-12 h-12 shadow-2 my-3 mx-0"
+                                        style="object-fit: cover; max-width: 168px; max-height: 94px;"
+                                        (error)="handleImageError($event)" />
+                                </a>
+
+                                <small class="mb-3 font-semibold text-truncate h-2rem">{{ video.title }}</small>
+                            </div>
+                            <div class="flex align-items-center justify-content-between">
+                                <small class="font-semibold">{{ abbreviateDuration(video.duration) }} </small>
+                                <div
+                                    [class]="'product-badge status-' + (video.isDownloaded ? 'instock' : 'outofstock')">
+                                    {{ video.isDownloaded ? 'Processado' : 'Não processado' }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-dataView>
+        </div>

@@ -1,0 +1,54 @@
+/* You can add global styles to this file, and also import other style files */
+
+$gutter: 1rem; //for primeflex grid system
+@import "assets/layout/styles/layout/layout.scss";
+
+/* PrimeNG */
+@import "../node_modules/primeng/resources/primeng.min.css";
+@import "../node_modules/primeflex/primeflex.scss";
+@import "../node_modules/primeicons/primeicons.css";
+
+/* Demos */
+@import "assets/demo/styles/flags/flags.css";
+@import "assets/demo/styles/badges.scss";
+@import "assets/demo/styles/code.scss";
+
+
+.webcam-container {
+  .p-card {
+    border: 1px solid #c5c5c5;
+    border-radius: 4px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    height: auto; /* Definir altura automática */
+    width: auto; /* Definir largura automática */
+  }
+
+  .p-button {
+    margin-top: 1rem;
+  }
+}
+
+.manual-check {
+    background-color: yellow;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.auto-check {
+    background-color: lightgray;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.engagement-info {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin-right: 12px;
+  }
+
+  .custom-avatar {
+    width: 64px;
+    height: 64px;
+}

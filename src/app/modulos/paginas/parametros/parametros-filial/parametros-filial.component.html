@@ -1,0 +1,112 @@
+<div class="grid">
+    <div class="col-12">
+        <p-toast></p-toast>
+        <div class="card">
+            <h4>Títulos Baixados no Winthor</h4>
+            <p-toolbar styleClass="mb-4 gap-2">
+                <ng-template pTemplate="left">
+                  <div class="flex justify-center"> <!-- Adiciona a classe justify-center para centralizar -->
+                    <form [formGroup]="form" class="flex align-items-center gap-1">
+                        <p-inputGroup >
+                            <p-inputGroupAddon>
+                                <i class="pi pi-calendar"></i>
+                            </p-inputGroupAddon>
+                            <p-calendar formControlName="dataInicio" placeholder="Data Início" [dateFormat]="'dd/mm/yy'"></p-calendar>
+                        </p-inputGroup>
+                        <p-inputGroup>
+                            <p-inputGroupAddon>
+                                <i class="pi pi-calendar"></i>
+                            </p-inputGroupAddon>
+                            <p-calendar formControlName="dataFinal" placeholder="Data Final" [dateFormat]="'dd/mm/yy'"></p-calendar>
+                        </p-inputGroup>
+
+                        <p-dropdown [options]="listStatus" formControlName="selectedStatus"   optionLabel="name"   placeholder="Selecione o Status"></p-dropdown>
+
+
+                        <p-divider layout="vertical" styleClass="hidden md:flex"><b>|</b></p-divider>
+
+                        <p-inputGroup>
+                            <p-inputGroupAddon> <i class="pi pi-search"></i></p-inputGroupAddon>
+                            <button pButton pRipple label="Pesquisar"  class="p-button-success mr-2" (click)="pesquisar()"></button>
+                        </p-inputGroup>
+
+                    </form>
+                  </div>
+                </ng-template>
+              </p-toolbar>
+
+            <p-table #dt [value]="filteredtitulos" [loading]="loading" [paginator]="true" [rows]="pageSize"
+                [lazy]="true"  [totalRecords]="totalCount"  (onLazyLoad)="loadData($event)" styleClass="p-datatable-striped"
+                [globalFilterFields]="['idIntegracao']" [rowHover]="true" responsiveLayout="scroll"
+                [showCurrentPageReport]="false">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="onGlobalFilter($event)" placeholder="Pesquisar..."
+                            class="w-full sm:w-auto" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>status</th>
+                        <th>Id</th>
+                        <th>Id Integracao</th>
+                        <th>Data Criação</th>
+                        <th>Nome Regra Integração</th>
+                        <th>Observação</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-titulo let-rowIndex="rowIndex">
+                    <tr>
+                        <td style="width: 3%; min-width: 7rem;">
+                            <p-tag [value]="getValorSeverity(titulo.status)" [severity]="getSeverity(titulo.status)"></p-tag>
+                        </td>
+                        <td style="width: 5%; min-width: 5rem;">
+                            {{titulo.id}}
+                        </td>
+                        <td style="width: 5%; min-width: 7rem; font-weight: bold;">
+                            {{titulo.idIntegracao}}
+                        </td>
+                        <td style="width: 15%; min-width: 7rem;">
+                            {{titulo.dataCriacao}}
+                        </td>
+                        <td style="width: 20%; min-width: 7rem;">
+                            {{titulo.nomeRegraIntegracao}}
+                        </td>
+                        <td style="width: 20%; min-width: 7rem;">
+                            {{titulo.observacao}}
+                        </td>
+
+                        <!-- <td style="width: 15%;">
+                            <button pButton pRipple icon="pi pi-list" pTooltip="Ir para videos" tooltipPosition="right"
+                                class="p-button-rounded p-button-info mr-2"
+                                (click)="navigateDetailVideo(titulo)"></button>
+                        </td> -->
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <!-- <p-dialog [(visible)]="tituloDialog" [style]="{width: '300px'}" header="Novo canal" [modal]="true"
+            class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field">
+                    <label for="name">Nome</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="titulo.name" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !titulo.name}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !titulo.name">Nome é obrigatório.</small>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+                    (click)="hideDialog()"></button>
+                <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text" (click)="savetitulo()"
+                    [loading]="loading"></button>
+            </ng-template>
+        </p-dialog> -->
+
+    </div>
+</div>
