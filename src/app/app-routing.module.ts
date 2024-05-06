@@ -14,7 +14,7 @@ import { IdentificationComponent } from './modulos/paginas/cadastros/cadastro-fo
                     //  { path: 'uikit', loadChildren: () => import('./compartilhado/componentes/uikit/uikit.module').then(m => m.UIkitModule) },
                      { path: 'pesquisas', loadChildren: () => import('./modulos/paginas/pesquisas/pesquisas.module').then(m => m.PesquisasModule) },
                      { path: 'cadastros', loadChildren: () => import('./modulos/paginas/cadastros/cadastros.module').then(m => m.CadastrosModule) },
-                    //  { path: 'relatorios', loadChildren: () => import('./modulos/paginas/relatorios/relatorios.module').then(m => m.RelatoriosModule) },
+                     { path: 'parametros', loadChildren: () => import('./modulos/paginas/parametros/parametros.module').then(m => m.ParametrosModule) },
 
                      // { path: 'utilities', loadChildren: () => import('./compartilhado/componentes/utilities/utilities.module').then(m => m.UtilitiesModule) },
                     // { path: 'documentation', loadChildren: () => import('./compartilhado/componentes/documentation/documentation.module').then(m => m.DocumentationModule) },

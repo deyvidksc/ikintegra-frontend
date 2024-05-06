@@ -2,88 +2,83 @@
     <div class="col-12">
         <p-toast></p-toast>
         <div class="card">
-            <h4>Títulos Baixados no Winthor</h4>
+            <h4>Parâmetros</h4>
             <p-toolbar styleClass="mb-4 gap-2">
                 <ng-template pTemplate="left">
-                  <div class="flex justify-center"> <!-- Adiciona a classe justify-center para centralizar -->
-                    <form [formGroup]="form" class="flex align-items-center gap-1">
-                        <p-inputGroup >
-                            <p-inputGroupAddon>
-                                <i class="pi pi-calendar"></i>
-                            </p-inputGroupAddon>
-                            <p-calendar formControlName="dataInicio" placeholder="Data Início" [dateFormat]="'dd/mm/yy'"></p-calendar>
-                        </p-inputGroup>
-                        <p-inputGroup>
-                            <p-inputGroupAddon>
-                                <i class="pi pi-calendar"></i>
-                            </p-inputGroupAddon>
-                            <p-calendar formControlName="dataFinal" placeholder="Data Final" [dateFormat]="'dd/mm/yy'"></p-calendar>
-                        </p-inputGroup>
+                    <div class="flex justify-center">
+                        <form [formGroup]="form" class="flex align-items-center gap-1">
+                            <input pInputText type="text" placeholder="Nome do Parâmetro" formControlName="nome" />
+                            <input pInputText type="text" placeholder="Digite a Filial" formControlName="filial" />
 
-                        <p-dropdown [options]="listStatus" formControlName="selectedStatus"   optionLabel="name"   placeholder="Selecione o Status"></p-dropdown>
+                            <p-divider layout="vertical" styleClass="hidden md:flex"><b>|</b></p-divider>
 
+                            <p-inputGroup>
+                                <p-inputGroupAddon> <i class="pi pi-search"></i></p-inputGroupAddon>
+                                <button pButton pRipple label="Pesquisar" class="p-button-success mr-2"
+                                    (click)="pesquisar()"></button>
+                            </p-inputGroup>
 
-                        <p-divider layout="vertical" styleClass="hidden md:flex"><b>|</b></p-divider>
-
-                        <p-inputGroup>
-                            <p-inputGroupAddon> <i class="pi pi-search"></i></p-inputGroupAddon>
-                            <button pButton pRipple label="Pesquisar"  class="p-button-success mr-2" (click)="pesquisar()"></button>
-                        </p-inputGroup>
-
-                    </form>
-                  </div>
+                        </form>
+                    </div>
                 </ng-template>
-              </p-toolbar>
+            </p-toolbar>
 
-            <p-table #dt [value]="filteredtitulos" [loading]="loading" [paginator]="true" [rows]="pageSize"
-                [lazy]="true"  [totalRecords]="totalCount"  (onLazyLoad)="loadData($event)" styleClass="p-datatable-striped"
-                [globalFilterFields]="['idIntegracao']" [rowHover]="true" responsiveLayout="scroll"
-                [showCurrentPageReport]="false">
+            <p-table #dt [value]="filteredParamFiliais" [loading]="loading" [paginator]="true" [rows]="pageSize"
+                [lazy]="true" [totalRecords]="totalCount" (onLazyLoad)="loadData($event)"
+                styleClass="p-datatable-striped" [globalFilterFields]="['nome']" [rowHover]="true"
+                responsiveLayout="scroll" [showCurrentPageReport]="false" dataKey="id" editMode="row"
+                [tableStyle]="{'min-width': '50rem'}">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
-                        <i class="pi pi-search"></i>
-                        <input pInputText type="text" (input)="onGlobalFilter($event)" placeholder="Pesquisar..."
-                            class="w-full sm:w-auto" />
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter($event)" placeholder="Filtrar..."
+                                class="w-full sm:w-auto" />
                         </span>
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th>status</th>
-                        <th>Id</th>
-                        <th>Id Integracao</th>
-                        <th>Data Criação</th>
-                        <th>Nome Regra Integração</th>
-                        <th>Observação</th>
+                        <th style="width:25%">Nome</th>
+                        <th style="width:25%">Filial</th>
+                        <th style="width:25%">Valor</th>
+                        <th style="width:25%"></th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-titulo let-rowIndex="rowIndex">
-                    <tr>
-                        <td style="width: 3%; min-width: 7rem;">
-                            <p-tag [value]="getValorSeverity(titulo.status)" [severity]="getSeverity(titulo.status)"></p-tag>
+                <ng-template pTemplate="body" let-paramFilial let-rowIndex="rowIndex" let-editing="editing">
+                    <tr [pEditableRow]="paramFilial">
+                        <td>
+                            {{paramFilial.nome}}
                         </td>
-                        <td style="width: 5%; min-width: 5rem;">
-                            {{titulo.id}}
+                        <td>
+                            {{paramFilial.codfilial}}
                         </td>
-                        <td style="width: 5%; min-width: 7rem; font-weight: bold;">
-                            {{titulo.idIntegracao}}
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" [(ngModel)]="paramFilial.valor" required />
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{paramFilial.valor}}
+                                </ng-template>
+                            </p-cellEditor>
                         </td>
-                        <td style="width: 15%; min-width: 7rem;">
-                            {{titulo.dataCriacao}}
+                        <td>
+                            <div class="flex align-items-center justify-content-center gap-2">
+                                <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
+                                    icon="pi pi-pencil" (click)="onRowEditInit(paramFilial)"
+                                    class="p-button-rounded p-button-text">
+                                </button>
+                                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
+                                    icon="pi pi-check" (click)="onRowEditSave(paramFilial)"
+                                    class="p-button-rounded p-button-text p-button-success mr-2">
+                                </button>
+                                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow
+                                    icon="pi pi-times" (click)="onRowEditCancel(paramFilial, rowIndex)"
+                                    class="p-button-rounded p-button-text p-button-danger">
+                                </button>
+                            </div>
                         </td>
-                        <td style="width: 20%; min-width: 7rem;">
-                            {{titulo.nomeRegraIntegracao}}
-                        </td>
-                        <td style="width: 20%; min-width: 7rem;">
-                            {{titulo.observacao}}
-                        </td>
-
-                        <!-- <td style="width: 15%;">
-                            <button pButton pRipple icon="pi pi-list" pTooltip="Ir para videos" tooltipPosition="right"
-                                class="p-button-rounded p-button-info mr-2"
-                                (click)="navigateDetailVideo(titulo)"></button>
-                        </td> -->
                     </tr>
                 </ng-template>
             </p-table>
