@@ -17,7 +17,7 @@
                             <p-inputGroupAddon>
                                 <i class="pi pi-calendar"></i>
                             </p-inputGroupAddon>
-                            <p-calendar formControlName="dataFinal" placeholder="Data Final" [dateFormat]="'dd/mm/yy'"></p-calendar>
+                            <p-calendar  [showIcon]="true"formControlName="dataFinal" placeholder="Data Final" [dateFormat]="'dd/mm/yy'"></p-calendar>
                         </p-inputGroup>
 
                         <p-dropdown [options]="listStatus" formControlName="selectedStatus"   optionLabel="name"   placeholder="Selecione o Status"></p-dropdown>

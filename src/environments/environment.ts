@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  urlBase: 'http://localhost:8889' //process.env.NG_APP_API_BASE_URL
+  urlBase: process.env.NG_APP_API_BASE_URL
 };
 
 /*

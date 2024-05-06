@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "sakai-ng": {
+        "ink-integra": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -20,7 +20,7 @@
                 "build": {
                     "builder": "@ngx-env/builder:browser",
                     "options": {
-                        "outputPath": "dist/sakai-ng",
+                        "outputPath": "dist/ink-integra",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -80,10 +80,10 @@
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "sakai-ng:build:production"
+                            "browserTarget": "ink-integra:build:production"
                         },
                         "development": {
-                            "browserTarget": "sakai-ng:build:development"
+                            "browserTarget": "ink-integra:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -91,7 +91,7 @@
                 "extract-i18n": {
                     "builder": "@ngx-env/builder:extract-i18n",
                     "options": {
-                        "browserTarget": "sakai-ng:build"
+                        "browserTarget": "ink-integra:build"
                     }
                 },
                 "test": {
@@ -124,7 +124,7 @@
             }
         }
     },
-    "defaultProject": "sakai-ng",
+    "defaultProject": "ink-integra",
     "cli": {
         "analytics": false,
         "schematicCollections": [

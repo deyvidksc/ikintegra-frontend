@@ -9,6 +9,7 @@ import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { PaginateResponse } from 'src/app/compartilhado/modelos/paginate';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { Console } from 'console';
 export class Status {
     name: string = "Sucesso";
     value: number = 2;
@@ -69,7 +70,6 @@ export class TitulosBaixadosComponent implements OnInit {
             { name: 'Erro', value: 0 },
             { name: 'Todos', value: 99 }
         ];
-
     }
 
     onSortChange(event: any) {
